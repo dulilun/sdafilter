@@ -7,7 +7,8 @@
 
 <!-- badges: end -->
 
-The goal of sdafilter is to …
+The goal of sdafilter is to provide an R package for our new paper on
+arXiv; see the link: <https://arxiv.org/abs/2002.11992>
 
 ## Installation
 
