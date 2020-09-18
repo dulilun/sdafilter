@@ -26,7 +26,7 @@
 #' print(out)
 #'
 SDA_M <- function(dat, alpha, Omega, nonsparse = FALSE, stable=TRUE){
-  # The core functions for our SDA methods
+  # The core functions for the SDA method
   # The inverse of Sigma
   INV <- function(Sigma){
     EgSig0 = eigen(Sigma)
