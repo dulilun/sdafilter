@@ -63,17 +63,6 @@ print(out)
 
 ## Example 2 two sample t test
 ```{r example 2}
-library(sdafilter)
-n = 50
-p = 100
-dat = matrix(rnorm(n*p), nrow=n)
-mu = rep(0, p)
-mu[1:as.integer(0.1*p)]=0.3
-dat = dat+rep(1, n)%*%t(mu)
-alpha = 0.2
-out = SDA_M(dat, alpha, diag(p))
-print(out)
-
 p = 100
 n = 30
 dat_I = matrix(rnorm(n*p),nrow = n)

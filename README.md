@@ -43,7 +43,7 @@ out = SDA_M(dat, alpha, diag(p))
 #> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
 #> returning Inf
 print(out)
-#> [1]  7  8 10 15 46
+#> [1] 2 6 7 8 9
 
 p = 100
 n = 30
@@ -57,29 +57,12 @@ out = SDA_2S(dat_I, dat_II, alpha=0.05)
 #> Conducting the graphical lasso (glasso)....done.                                          
 #> Conducting extended Bayesian information criterion (ebic) selection....done
 print(out)
-#>  [1]  3  9  1  5  8  4  7  2  6 10
+#>  [1]  9  2  4  3  7  8  6 10  5  1
 ```
 
 ## Example 2 two sample t test
 
 ``` r
-library(sdafilter)
-n = 50
-p = 100
-dat = matrix(rnorm(n*p), nrow=n)
-mu = rep(0, p)
-mu[1:as.integer(0.1*p)]=0.3
-dat = dat+rep(1, n)%*%t(mu)
-alpha = 0.2
-out = SDA_M(dat, alpha, diag(p))
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
-
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
-print(out)
-#> [1] 1 2
-
 p = 100
 n = 30
 dat_I = matrix(rnorm(n*p),nrow = n)
@@ -92,5 +75,5 @@ out = SDA_2S(dat_I, dat_II, alpha=0.05)
 #> Conducting the graphical lasso (glasso)....done.                                          
 #> Conducting extended Bayesian information criterion (ebic) selection....done
 print(out)
-#>  [1] 10  5  4  8  6  2  1  9  7  3
+#>  [1]  7  5  1 10  8  9  2  4  6  3
 ```
