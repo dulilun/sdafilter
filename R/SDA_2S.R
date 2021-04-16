@@ -15,7 +15,7 @@
 #' mu = rep(0, p)
 #' mu[1:10] = 1.5
 #' dat_I = dat_I = rep(1, n)%*%t(mu)
-
+#'
 #' dat_II = matrix(rnorm(n*p), nrow = n)
 #' out = SDA_2S(dat_I, dat_II, alpha=0.05)
 #' print(out)
