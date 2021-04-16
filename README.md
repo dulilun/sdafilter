@@ -36,29 +36,15 @@ n = 50
 p = 100
 dat = matrix(rnorm(n*p), nrow=n)
 mu = rep(0, p)
-mu[1:as.integer(0.1*p)]=0.3
+mu[1:as.integer(0.1*p)]=0.5
 dat = dat+rep(1, n)%*%t(mu)
 alpha = 0.2
-out = SDA_M(dat, alpha, diag(p))
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
-
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
-
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
-
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
-
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
-
-#> Warning in min(t[which(Ta <= alpha)]): no non-missing arguments to min;
-#> returning Inf
+out = SDA_M(dat, alpha)
+#> Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 9%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 19%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 30%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 40%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 50%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 60%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 70%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 80%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 90%
+#> Conducting the graphical lasso (glasso)....done.                                          
+#> Conducting Subsampling....in progress:5% Conducting Subsampling....in progress:10% Conducting Subsampling....in progress:15% Conducting Subsampling....in progress:20% Conducting Subsampling....in progress:25% Conducting Subsampling....in progress:30% Conducting Subsampling....in progress:35% Conducting Subsampling....in progress:40% Conducting Subsampling....in progress:45% Conducting Subsampling....in progress:50% Conducting Subsampling....in progress:55% Conducting Subsampling....in progress:60% Conducting Subsampling....in progress:65% Conducting Subsampling....in progress:70% Conducting Subsampling....in progress:75% Conducting Subsampling....in progress:80% Conducting Subsampling....in progress:85% Conducting Subsampling....in progress:90% Conducting Subsampling....in progress:95% Conducting Subsampling....in progress:100% Conducting Subsampling....done.                  
 print(out)
-#> [1] "no rejection"
+#> [1] 1 3 4 5 6 7 8 9
 ```
 
 ## Example 2: two sample t test
@@ -76,5 +62,5 @@ out = SDA_2S(dat_I, dat_II, alpha=0.05)
 #> Conducting the graphical lasso (glasso)....done.                                          
 #> Conducting extended Bayesian information criterion (ebic) selection....done
 print(out)
-#>  [1]  9  7 10  4  6  5  8  3  1  2
+#>  [1]  8 10  4  3  2  7  5  9  6  1
 ```
