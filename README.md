@@ -26,7 +26,7 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("dulilun/sdafilter")
 ```
 
-## Example
+## Example 1
 
 This is a basic example which shows you how to solve a simple problem:
 
