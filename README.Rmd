@@ -49,12 +49,7 @@ dat = dat+rep(1, n)%*%t(mu)
 alpha = 0.2
 out = SDA_M(dat, alpha, diag(p))
 print(out)
-```
 
-## Example 2
-Here is a illustration of a new function for two-sample t-tests under dependence.
-```{r example}
-library(sdafilter)
 p = 100
 n = 30
 dat_I = matrix(rnorm(n*p),nrow = n)
