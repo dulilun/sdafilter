@@ -61,7 +61,7 @@ out = SDA_2S(dat_I, dat_II, alpha=0.05)
 print(out)
 ```
 
-## Example 2 two sample t test
+## Example 2: two sample t test
 ```{r example 2}
 p = 100
 n = 30
