@@ -79,10 +79,10 @@ SDA_2S <- function(dat_I, dat_II, alpha, stable=TRUE){
     Sigma_est = t(dat)%*%Q%*%dat/(n-1)
     # glasso packages
     GG = glasso::glasso(Sigma_est, lambda)
-    Omega_1 = GG$wi
-    #Sigma_1 = GG$w
-    #Sigma_1 = GG$w-diag(p)*lambda # bias correction on the diagonal
-    #Omega_1 = INV(Sigma_1)
+    #Omega_1 = GG$wi
+    Sigma_1 = GG$w
+    Sigma_1 = GG$w-diag(p)*lambda # bias correction on the diagonal
+    Omega_1 = INV(Sigma_1)
 
     return(Omega_1)
   }
