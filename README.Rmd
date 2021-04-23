@@ -34,7 +34,7 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("dulilun/sdafilter")
 ```
-## Example 1: one sample t test
+## Example 1: multiple testing: one sample t test
 
 This is a basic example which shows you how to solve a simple problem:
 
@@ -51,7 +51,7 @@ out = SDA_M(dat, alpha)
 print(out)
 ```
 
-## Example 2: two sample t test
+## Example 2: multiple testing: two sample t test
 ```{r example 2}
 p = 100
 n = 30

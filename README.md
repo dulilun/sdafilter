@@ -26,7 +26,7 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("dulilun/sdafilter")
 ```
 
-## Example 1: one sample t test
+## Example 1: multiple testing: one sample t test
 
 This is a basic example which shows you how to solve a simple problem:
 
@@ -44,10 +44,10 @@ out = SDA_M(dat, alpha)
 #> Conducting the graphical lasso (glasso)....done.                                          
 #> Conducting Subsampling....in progress:5% Conducting Subsampling....in progress:10% Conducting Subsampling....in progress:15% Conducting Subsampling....in progress:20% Conducting Subsampling....in progress:25% Conducting Subsampling....in progress:30% Conducting Subsampling....in progress:35% Conducting Subsampling....in progress:40% Conducting Subsampling....in progress:45% Conducting Subsampling....in progress:50% Conducting Subsampling....in progress:55% Conducting Subsampling....in progress:60% Conducting Subsampling....in progress:65% Conducting Subsampling....in progress:70% Conducting Subsampling....in progress:75% Conducting Subsampling....in progress:80% Conducting Subsampling....in progress:85% Conducting Subsampling....in progress:90% Conducting Subsampling....in progress:95% Conducting Subsampling....in progress:100% Conducting Subsampling....done.                  
 print(out)
-#> [1] 1 3 4 5 6 7 8 9
+#> [1]  1  4  5  6  9 10 56
 ```
 
-## Example 2: two sample t test
+## Example 2: multiple testing: two sample t test
 
 ``` r
 p = 100
@@ -62,5 +62,5 @@ out = SDA_2S(dat_I, dat_II, alpha=0.05)
 #> Conducting the graphical lasso (glasso)....done.                                          
 #> Conducting extended Bayesian information criterion (ebic) selection....done
 print(out)
-#>  [1]  8 10  4  3  2  7  5  9  6  1
+#>  [1]  3 10  6  4  1  8  5  7  9  2
 ```
