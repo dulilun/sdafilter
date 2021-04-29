@@ -3,6 +3,10 @@
 #' @param dat_I a n_1 by p data matrix, first sample
 #' @param dat_II a n_2 by p data matrix, second sample
 #' @param alpha the FDR level
+#' @param Sigma_I the covariance matrix of sample 1; if missing, it will be estimated
+#' by the glasso package
+#' @param Sigma_II the covariance matrix of sample 1; if missing, it will be estimated
+#' by the glasso package
 #' @param stable if TRUE, the sample will be randomly splitted B=10 times for stability
 #' performance; otherwise, only single sample splitting is used.
 #'
@@ -17,10 +21,12 @@
 #' dat_I = dat_I = rep(1, n)%*%t(mu)
 #'
 #' dat_II = matrix(rnorm(n*p), nrow = n)
-#' out = SDA_2S(dat_I, dat_II, alpha=0.05)
+#' Sigma_I = diag(p)
+#' Sigma_II = diag(p)
+#' out = SDA_2S(dat_I, dat_II, alpha=0.05, Sigma_I, Sigma_II)
 #' print(out)
 #'
-SDA_2S <- function(dat_I, dat_II, alpha, stable=TRUE){
+SDA_2S <- function(dat_I, dat_II, alpha, Sigma_I, Sigma_II, stable=TRUE){
   # SDA method with two sample t-tests
   # The inverse of Sigma
   INV <- function(Sigma){
@@ -172,16 +178,6 @@ SDA_2S <- function(dat_I, dat_II, alpha, stable=TRUE){
     return(aa)
   }
 
-  # Method: single splitting
-  Mirror_S_new <- function(Gamma, dat_I, index_I, dat_II, index_II, alpha){
-    Wj = MF_S(Gamma, dat_I, index_I, dat_II, index_II)
-    aa = W_det(Wj, alpha, '+')
-    deta = which(aa>0)
-    # rank the output
-    deta = deta[order(Wj[deta], decreasing = TRUE)]
-    return(deta)
-  }
-
   # Method: multiple splitting
   Mirror_MM_new <- function(Gamma_K, dat_I, index_I_K, dat_II, index_II_K, alpha){
 
@@ -210,26 +206,25 @@ SDA_2S <- function(dat_I, dat_II, alpha, stable=TRUE){
   n = n_1+n_2
   p = dim(dat_I)[2]
 
-  # fix the tuning parameter
-  index_1 = sample(1:n_1, floor(2/3*n_1))
-  index_2 = sample(1:n_2, floor(2/3*n_2))
-  dat1 = dat_I[index_1, ]
-  dat2 = dat_II[index_2, ]
-  # esimate the pooling covariance matrix: tuning parameter
-  dat_combine = dat_RE(dat1, dat2)
-  # lambda: tuning parameter for glasso
-  out.glasso = huge::huge(dat_combine, method = "glasso")
-  out.select = huge::huge.select(out.glasso, criterion = "ebic")
-  lambda = out.select$opt.lambda
+  # stable option: single or multiple splitting
+  if(stable){
+    K=10
+  }else{K=1}
+  #---------------------------------
 
-  # covariance matrix for single splitting
-  Sigma_MM = Sample_COV(dat_combine)
-  Omega_hat = Omega_est(Sigma_MM, lambda)
-  Omega_hat = (1+length(index_1)/length(index_2))*Omega_hat
-  Gamma_hat = Sqrt(Omega_hat)
+  if( missing(Sigma_I)||missing(Sigma_II) ){
+    # fix the tuning parameter
+    index_1 = sample(1:n_1, floor(2/3*n_1))
+    index_2 = sample(1:n_2, floor(2/3*n_2))
+    dat1 = dat_I[index_1, ]
+    dat2 = dat_II[index_2, ]
+    # estimate the pooling covariance matrix: tuning parameter
+    dat_combine = dat_RE(dat1, dat2)
+    # lambda: tuning parameter for glasso
+    out.glasso = huge::huge(dat_combine, method = "glasso")
+    out.select = huge::huge.select(out.glasso, criterion = "ebic")
+    lambda = out.select$opt.lambda
 
-  if(stable==TRUE){
-    K = 10
     index_I_K = lapply(1:K, function(x){sample(1:n_1, floor(2/3*n_1))})
     index_II_K = lapply(1:K, function(x){sample(1:n_2, floor(2/3*n_2))})
     Gamma_K = lapply(1:K, function(x){
@@ -244,13 +239,18 @@ SDA_2S <- function(dat_I, dat_II, alpha, stable=TRUE){
       Gamma_hat = Sqrt(Omega_hat)
       return(Gamma_hat)
     })
-
-    det_01 = Mirror_MM_new(Gamma_K, dat_I, index_I_K, dat_II, index_II_K, alpha)
-
   }else{
-    ########################################################
-    det_01 = Mirror_S_new(Gamma_hat, dat_I, index_1, dat_II, index_2, alpha)
+    Omega <- INV(n_2/n*Sigma_I+n_1/n*Sigma_II)
+    index_I_K = lapply(1:K, function(x){sample(1:n_1, floor(2/3*n_1))})
+    index_II_K = lapply(1:K, function(x){sample(1:n_2, floor(2/3*n_2))})
+    Gamma = Sqrt(Omega)
+    Gamma_K = lapply(1:K, function(x){Gamma})
   }
+
+
+  det_01 = Mirror_MM_new(Gamma_K, dat_I, index_I_K, dat_II, index_II_K, alpha)
+
+
 
   # output
   if (length(det_01)==0){
