@@ -16,7 +16,7 @@ SDA_2S(dat_I, dat_II, alpha, Sigma_I, Sigma_II, stable = TRUE)
 \item{Sigma_I}{the covariance matrix of sample 1; if missing, it will be estimated
 by the glasso package}
 
-\item{Sigma_II}{the covariance matrix of sample 1; if missing, it will be estimated
+\item{Sigma_II}{the covariance matrix of sample 2; if missing, it will be estimated
 by the glasso package}
 
 \item{stable}{if TRUE, the sample will be randomly splitted B=10 times for stability

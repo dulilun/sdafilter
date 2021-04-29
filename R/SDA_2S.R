@@ -5,7 +5,7 @@
 #' @param alpha the FDR level
 #' @param Sigma_I the covariance matrix of sample 1; if missing, it will be estimated
 #' by the glasso package
-#' @param Sigma_II the covariance matrix of sample 1; if missing, it will be estimated
+#' @param Sigma_II the covariance matrix of sample 2; if missing, it will be estimated
 #' by the glasso package
 #' @param stable if TRUE, the sample will be randomly splitted B=10 times for stability
 #' performance; otherwise, only single sample splitting is used.
