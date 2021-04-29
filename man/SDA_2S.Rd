@@ -4,7 +4,7 @@
 \alias{SDA_2S}
 \title{Symmetrized Data Aggregation for two-sample t-test}
 \usage{
-SDA_2S(dat_I, dat_II, alpha, stable = TRUE)
+SDA_2S(dat_I, dat_II, alpha, Sigma_I, Sigma_II, stable = TRUE)
 }
 \arguments{
 \item{dat_I}{a n_1 by p data matrix, first sample}
@@ -12,6 +12,12 @@ SDA_2S(dat_I, dat_II, alpha, stable = TRUE)
 \item{dat_II}{a n_2 by p data matrix, second sample}
 
 \item{alpha}{the FDR level}
+
+\item{Sigma_I}{the covariance matrix of sample 1; if missing, it will be estimated
+by the glasso package}
+
+\item{Sigma_II}{the covariance matrix of sample 1; if missing, it will be estimated
+by the glasso package}
 
 \item{stable}{if TRUE, the sample will be randomly splitted B=10 times for stability
 performance; otherwise, only single sample splitting is used.}
@@ -31,7 +37,9 @@ mu[1:10] = 1.5
 dat_I = dat_I = rep(1, n)\%*\%t(mu)
 
 dat_II = matrix(rnorm(n*p), nrow = n)
-out = SDA_2S(dat_I, dat_II, alpha=0.05)
+Sigma_I = diag(p)
+Sigma_II = diag(p)
+out = SDA_2S(dat_I, dat_II, alpha=0.05, Sigma_I, Sigma_II)
 print(out)
 
 }
