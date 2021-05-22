@@ -1,4 +1,4 @@
-#' Symmetrized Data Aggregation
+#' Symmetrized Data Aggregation for one-sample t-test
 #'
 #' This is the core function for the paper posted in arXiv preprint arXiv:2002.11992
 #'

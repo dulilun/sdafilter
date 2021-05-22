@@ -2,7 +2,7 @@
 % Please edit documentation in R/SDA_M.R
 \name{SDA_M}
 \alias{SDA_M}
-\title{Symmetrized Data Aggregation}
+\title{Symmetrized Data Aggregation for one-sample t-test}
 \usage{
 SDA_M(dat, alpha, Omega, nonsparse = FALSE, stable = TRUE)
 }
