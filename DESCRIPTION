@@ -31,7 +31,10 @@ Imports:
     glasso,
     huge,
     POET,
-    stats
+    stats,
+    selectiveInference,
+    pfa,
+    MASS
 Suggests: 
     testthat (>= 2.1.0)
 Repository: CRAN
