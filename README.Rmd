@@ -89,6 +89,7 @@ mu = rep(0, p)
 mu[1:as.integer(0.1*p)]=0.5
 dat = dat+rep(1, n)%*%t(mu)
 alpha = 0.2
+# kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
 out = SDA_robust(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
 ```
