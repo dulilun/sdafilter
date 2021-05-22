@@ -2,3 +2,4 @@
 
 export(SDA_2S)
 export(SDA_M)
+export(SDA_robust)
