@@ -58,6 +58,9 @@ print(out)
 ```
 
 ## Example 2: multiple testing: two sample t test
+
+This is a demonstration how to use our SDA method in two sample case.
+
 ```{r example 2}
 p = 100
 n = 30

@@ -50,10 +50,12 @@ out = SDA_M(dat, alpha)
 #> Conducting the graphical lasso (glasso)....done.                                          
 #> Conducting Subsampling....in progress:5% Conducting Subsampling....in progress:10% Conducting Subsampling....in progress:15% Conducting Subsampling....in progress:20% Conducting Subsampling....in progress:25% Conducting Subsampling....in progress:30% Conducting Subsampling....in progress:35% Conducting Subsampling....in progress:40% Conducting Subsampling....in progress:45% Conducting Subsampling....in progress:50% Conducting Subsampling....in progress:55% Conducting Subsampling....in progress:60% Conducting Subsampling....in progress:65% Conducting Subsampling....in progress:70% Conducting Subsampling....in progress:75% Conducting Subsampling....in progress:80% Conducting Subsampling....in progress:85% Conducting Subsampling....in progress:90% Conducting Subsampling....in progress:95% Conducting Subsampling....in progress:100% Conducting Subsampling....done.                  
 print(out)
-#>  [1]  1  2  3  4  5  6  7  8  9 10
+#>  [1]  1  2  3  4  5  6  7  8  9 10 20
 ```
 
 ## Example 2: multiple testing: two sample t test
+
+This is a demonstration how to use our SDA method in two sample case.
 
 ``` r
 p = 100
@@ -71,7 +73,7 @@ Sigma_II = diag(p)
 
 out = SDA_2S(dat_I, dat_II, alpha=0.05, Sigma_I, Sigma_II)
 print(out)
-#>  [1]  1  5  8  9  6  2  3 10  7  4
+#>  [1]  7  3  4  2 10  8  5  6  1  9
 ```
 
 ## Example 3: new function for one-sample t test, with various test statistics for the first sample provided
@@ -89,8 +91,8 @@ mu = rep(0, p)
 mu[1:as.integer(0.1*p)]=0.5
 dat = dat+rep(1, n)%*%t(mu)
 alpha = 0.2
-# kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
+#kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
 out = SDA_robust(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
-#>  [1]  1  2  3  4  5  6  7  8  9 10
+#>  [1]  1  2  3  4  5  6  7  8  9 10 65
 ```
