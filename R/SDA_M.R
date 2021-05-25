@@ -1,24 +1,24 @@
 #' Symmetrized Data Aggregation for one-sample t-test
 #'
 #' This is the main function in the SDA paper.
-#' Other commomly used test statistics for the first part of sample are also allowed in this function.
+#' Other commonly used test statistics for the first part of data are also allowed in this function.
 #'
 #'
 #' @param dat a n by p data matrix
 #' @param alpha the FDR level
 #' @param Omega the inverse covariance matrix; if it is missing, it will be estimated
 #' by the glasso package.
-#' @param nonsparse if it is TRUE, the covariance matrix will be estimated by the POET
+#' @param nonsparse If it is TRUE, the covariance matrix will be estimated by the POET
 #' package; otherwise it will be fitted by glasso by default.
-#' @param stable if it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
-#' performance; otherwise, only single sample splitting is used.
-#' @param kwd various methods for calculating the test statistics from the first part of sample
-#' @param scale if it is TRUE, the test statistic from the first sample will be standardized.
+#' @param stable If it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
+#' performance; otherwise, only single sample-splitting is used.
+#' @param kwd various methods for calculating the test statistics from the first part of data
+#' @param scale If it is TRUE, the test statistic from the first part of data will be standardized.
 #'
 #' @details We provide other commonly used test statistics for the first part of sample. These include
-#' the debiased lasso, innovated transformation, and the factor-adjusted test statistics.
+#' the de-biased lasso, innovated transformation, and factor-adjusted test statistics.
 #'
-#' @return The indices of the hypotheses rejected by the SDA method
+#' @return the indices of the hypotheses rejected by the SDA method
 #' @export
 #' @examples
 #' n = 50
@@ -39,7 +39,7 @@ SDA_M <- function(dat,
                   Omega,
                   nonsparse = FALSE,
                   stable=TRUE,
-                  kwd=c('lasso', 'de_lasso', 'innovate', 'pfa'),
+                  kwd=c('lasso', 'de-lasso', 'innovate', 'pfa'),
                   scale=TRUE){
   # The core functions for the SDA method
   # The inverse of Sigma
@@ -168,8 +168,8 @@ SDA_M <- function(dat,
       w1 = w1*sign(Test)
       sv = AIC_sda(Y, X, w1)
 
-    }else if(kwd == 'de_lasso'){
-      # required by the debias lasso
+    }else if(kwd == 'de-lasso'){
+      # required by the de-biasd lasso
       X_s = scale(X, center = TRUE, scale = FALSE)
       fit <- glmnet::glmnet(X_s, Y, standardize=FALSE, family = "gaussian")
       k <- fit$df
@@ -245,6 +245,9 @@ SDA_M <- function(dat,
     K=10
   }else{K=1}
   #---------------------------------
+
+  # kwd option: if it is null, then return kwd[1]
+  kwd = match.arg(kwd)
 
   # Need to estimate Omega
   if ( missing(Omega) ){

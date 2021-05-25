@@ -26,9 +26,9 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("dulilun/sdafilter")
 ```
 
-## Example 1: multiple testing: one sample t test
+## Example 1: multiple testing: one-sample t-test
 
-This is a simple example for multiple testing under dependence.
+This is a simple example of multiple testing of means under dependence.
 
 ``` r
 library(sdafilter)
@@ -48,10 +48,10 @@ alpha = 0.2
 #kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
 out = SDA_M(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
-#>  [1]  1  2  3  4  5  6  7  8  9 10 44
+#>  [1]  1  2  3  4  5  6  7  8  9 10 15 54
 ```
 
-## Example 2: multiple testing: two sample t test
+## Example 2: multiple testing: two-sample t-test
 
 This is a demonstration on how to use our SDA method in two sample case.
 
@@ -71,5 +71,5 @@ Sigma_II = diag(p)
 
 out = SDA_2S(dat_I, dat_II, alpha=0.05, Sigma_I, Sigma_II)
 print(out)
-#>  [1]  2 10  6  4  3  9  1  8  5  7 66 52
+#>  [1]  1  2  3  4  5  6  7  8  9 10
 ```

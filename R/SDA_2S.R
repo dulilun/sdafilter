@@ -1,16 +1,16 @@
 #' Symmetrized Data Aggregation for two-sample t-test
 #'
-#' @param dat_I a \eqn{n_1} by p data matrix, the first part of sample
-#' @param dat_II a \eqn{n_2} by p data matrix, the second part of sample
+#' @param dat_I a \eqn{n_1} by \eqn{p} data matrix, the first part of data
+#' @param dat_II a \eqn{n_2} by \eqn{p} data matrix, the second part of data
 #' @param alpha the FDR level
 #' @param Sigma_I the covariance matrix of sample 1; if it is missing, it will be estimated
 #' by the glasso package.
 #' @param Sigma_II the covariance matrix of sample 2; if it is missing, it will be estimated
 #' by the glasso package.
-#' @param stable If it is TRUE, the sample will be randomly splitted B=10 times for stability
+#' @param stable If it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
 #' performance; otherwise, only single sample splitting is used.
 #'
-#' @return The indices of the hypotheses rejected
+#' @return the indices of the hypotheses rejected
 #' @export
 #' @examples
 #' p = 100
@@ -196,7 +196,7 @@ SDA_2S <- function(dat_I, dat_II, alpha, Sigma_I, Sigma_II, stable=TRUE){
     # rank the output
     W_pick = Wa[, k_hat]
     det1 = det1[order(W_pick[det1], decreasing = TRUE)]
-    return(det1)
+    return(  sort(det1) )
   }
 
   ##########################################

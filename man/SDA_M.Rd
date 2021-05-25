@@ -10,7 +10,7 @@ SDA_M(
   Omega,
   nonsparse = FALSE,
   stable = TRUE,
-  kwd = c("lasso", "de_lasso", "innovate", "pfa"),
+  kwd = c("lasso", "de-lasso", "innovate", "pfa"),
   scale = TRUE
 )
 }
@@ -22,26 +22,26 @@ SDA_M(
 \item{Omega}{the inverse covariance matrix; if it is missing, it will be estimated
 by the glasso package.}
 
-\item{nonsparse}{if it is TRUE, the covariance matrix will be estimated by the POET
+\item{nonsparse}{If it is TRUE, the covariance matrix will be estimated by the POET
 package; otherwise it will be fitted by glasso by default.}
 
-\item{stable}{if it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
-performance; otherwise, only single sample splitting is used.}
+\item{stable}{If it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
+performance; otherwise, only single sample-splitting is used.}
 
-\item{kwd}{various methods for calculating the test statistics from the first part of sample}
+\item{kwd}{various methods for calculating the test statistics from the first part of data}
 
-\item{scale}{if it is TRUE, the test statistic from the first sample will be standardized.}
+\item{scale}{If it is TRUE, the test statistic from the first part of data will be standardized.}
 }
 \value{
-The indices of the hypotheses rejected by the SDA method
+the indices of the hypotheses rejected by the SDA method
 }
 \description{
 This is the main function in the SDA paper.
-Other commomly used test statistics for the first part of sample are also allowed in this function.
+Other commonly used test statistics for the first part of data are also allowed in this function.
 }
 \details{
 We provide other commonly used test statistics for the first part of sample. These include
-the debiased lasso, innovated transformation, and the factor-adjusted test statistics.
+the de-biased lasso, innovated transformation, and factor-adjusted test statistics.
 }
 \examples{
 n = 50
