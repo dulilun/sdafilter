@@ -1,7 +1,7 @@
-#' Symmetrized Data Aggregation for one sample t-test; other options for calculating the test
-#' statistics from the first sample
+#' Symmetrized Data Aggregation for one-sample t-test
 #'
-#' Other commomly used test statistics for the first sample are allowed in this function.
+#' This is the main function in the SDA paper.
+#' Other commomly used test statistics for the first part of sample are also allowed in this function.
 #'
 #'
 #' @param dat a n by p data matrix
@@ -12,13 +12,13 @@
 #' package; otherwise it will be fitted by glasso by default.
 #' @param stable if it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
 #' performance; otherwise, only single sample splitting is used.
-#' @param kwd various methods for calculating the test statistics from the first sample
+#' @param kwd various methods for calculating the test statistics from the first part of sample
 #' @param scale if it is TRUE, the test statistic from the first sample will be standardized.
 #'
-#' @details We provide other commonly used test statistics for the first sample. These include
+#' @details We provide other commonly used test statistics for the first part of sample. These include
 #' the debiased lasso, innovated transformation, and the factor-adjusted test statistics.
 #'
-#' @return the indices of the hypotheses rejected
+#' @return The indices of the hypotheses rejected by the SDA method
 #' @export
 #' @examples
 #' n = 50
@@ -31,7 +31,7 @@
 #' mu[1:as.integer(0.1*p)]=0.5
 #' dat = dat+rep(1, n)%*%t(mu)
 #' alpha = 0.2
-#' out = SDA_M(dat, alpha, solve(Sig), kwd='innovate')
+#' out = SDA_M(dat, alpha, solve(Sig), kwd='lasso')
 #' print(out)
 #'
 SDA_M <- function(dat,

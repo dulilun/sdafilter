@@ -2,8 +2,7 @@
 % Please edit documentation in R/SDA_M.R
 \name{SDA_M}
 \alias{SDA_M}
-\title{Symmetrized Data Aggregation for one sample t-test; other options for calculating the test
-statistics from the first sample}
+\title{Symmetrized Data Aggregation for one-sample t-test}
 \usage{
 SDA_M(
   dat,
@@ -29,18 +28,19 @@ package; otherwise it will be fitted by glasso by default.}
 \item{stable}{if it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
 performance; otherwise, only single sample splitting is used.}
 
-\item{kwd}{various methods for calculating the test statistics from the first sample}
+\item{kwd}{various methods for calculating the test statistics from the first part of sample}
 
 \item{scale}{if it is TRUE, the test statistic from the first sample will be standardized.}
 }
 \value{
-the indices of the hypotheses rejected
+The indices of the hypotheses rejected by the SDA method
 }
 \description{
-Other commomly used test statistics for the first sample are allowed in this function.
+This is the main function in the SDA paper.
+Other commomly used test statistics for the first part of sample are also allowed in this function.
 }
 \details{
-We provide other commonly used test statistics for the first sample. These include
+We provide other commonly used test statistics for the first part of sample. These include
 the debiased lasso, innovated transformation, and the factor-adjusted test statistics.
 }
 \examples{
@@ -54,7 +54,7 @@ mu = rep(0, p)
 mu[1:as.integer(0.1*p)]=0.5
 dat = dat+rep(1, n)\%*\%t(mu)
 alpha = 0.2
-out = SDA_M(dat, alpha, solve(Sig), kwd='innovate')
+out = SDA_M(dat, alpha, solve(Sig), kwd='lasso')
 print(out)
 
 }
