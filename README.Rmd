@@ -36,7 +36,7 @@ devtools::install_github("dulilun/sdafilter")
 ```
 ## Example 1: multiple testing: one sample t test
 
-This is a basic example which shows you how to solve a simple problem:
+This is a simple example for multiple testing under dependence.
 
 ```{r example 1}
 library(sdafilter)
@@ -53,13 +53,14 @@ mu[1:as.integer(0.1*p)]=0.5
 dat = dat+rep(1, n)%*%t(mu)
 
 alpha = 0.2
-out = SDA_M(dat, alpha)
+#kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
+out = SDA_M(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
 ```
 
 ## Example 2: multiple testing: two sample t test
 
-This is a demonstration how to use our SDA method in two sample case.
+This is a demonstration on how to use our SDA method in two sample case.
 
 ```{r example 2}
 p = 100
@@ -76,23 +77,5 @@ Sigma_I = diag(p)
 Sigma_II = diag(p)
 
 out = SDA_2S(dat_I, dat_II, alpha=0.05, Sigma_I, Sigma_II)
-print(out)
-```
-## Example 3: new function for one-sample t test, with various test statistics for the first sample provided
-```{r example 3}
-n = 50
-p = 100
-
-rho = 0.8
-Sig = matrix(rho, p, p)
-diag(Sig) = 1
-
-dat <- MASS::mvrnorm(n, rep(0, p), Sig)
-mu = rep(0, p)
-mu[1:as.integer(0.1*p)]=0.5
-dat = dat+rep(1, n)%*%t(mu)
-alpha = 0.2
-#kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
-out = SDA_robust(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
 ```

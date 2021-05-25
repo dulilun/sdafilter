@@ -2,39 +2,59 @@
 % Please edit documentation in R/SDA_M.R
 \name{SDA_M}
 \alias{SDA_M}
-\title{Symmetrized Data Aggregation for one-sample t-test}
+\title{Symmetrized Data Aggregation for one sample t-test; other options for calculating the test
+statistics from the first sample}
 \usage{
-SDA_M(dat, alpha, Omega, nonsparse = FALSE, stable = TRUE)
+SDA_M(
+  dat,
+  alpha,
+  Omega,
+  nonsparse = FALSE,
+  stable = TRUE,
+  kwd = c("lasso", "de_lasso", "innovate", "pfa"),
+  scale = TRUE
+)
 }
 \arguments{
 \item{dat}{a n by p data matrix}
 
 \item{alpha}{the FDR level}
 
-\item{Omega}{the inverse covariance matrix; if missing, it will be estimated
-by the glasso package}
+\item{Omega}{the inverse covariance matrix; if it is missing, it will be estimated
+by the glasso package.}
 
-\item{nonsparse}{if TRUE, the covariance matrix will be estimated by the POET
-package}
+\item{nonsparse}{if it is TRUE, the covariance matrix will be estimated by the POET
+package; otherwise it will be fitted by glasso by default.}
 
-\item{stable}{if TRUE, the sample will be randomly splitted B=10 times for stability
+\item{stable}{if it is TRUE, the sample will be randomly splitted \eqn{B=10} times for stability
 performance; otherwise, only single sample splitting is used.}
+
+\item{kwd}{various methods for calculating the test statistics from the first sample}
+
+\item{scale}{if it is TRUE, the test statistic from the first sample will be standardized.}
 }
 \value{
 the indices of the hypotheses rejected
 }
 \description{
-This is the core function for the paper posted in arXiv preprint arXiv:2002.11992
+Other commomly used test statistics for the first sample are allowed in this function.
+}
+\details{
+We provide other commonly used test statistics for the first sample. These include
+the debiased lasso, innovated transformation, and the factor-adjusted test statistics.
 }
 \examples{
 n = 50
 p = 100
-dat = matrix(rnorm(n*p), nrow=n)
+rho = 0.8
+Sig = matrix(rho, p, p)
+diag(Sig) = 1
+dat <- MASS::mvrnorm(n, rep(0, p), Sig)
 mu = rep(0, p)
-mu[1:as.integer(0.1*p)]=0.3
+mu[1:as.integer(0.1*p)]=0.5
 dat = dat+rep(1, n)\%*\%t(mu)
 alpha = 0.2
-out = SDA_M(dat, alpha, diag(p))
+out = SDA_M(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
 
 }

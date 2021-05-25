@@ -28,7 +28,7 @@ devtools::install_github("dulilun/sdafilter")
 
 ## Example 1: multiple testing: one sample t test
 
-This is a basic example which shows you how to solve a simple problem:
+This is a simple example for multiple testing under dependence.
 
 ``` r
 library(sdafilter)
@@ -45,17 +45,15 @@ mu[1:as.integer(0.1*p)]=0.5
 dat = dat+rep(1, n)%*%t(mu)
 
 alpha = 0.2
-out = SDA_M(dat, alpha)
-#> Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 9%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 19%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 30%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 40%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 50%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 60%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 70%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 80%Conducting the graphical lasso (glasso) wtih lossless screening....in progress: 90%
-#> Conducting the graphical lasso (glasso)....done.                                          
-#> Conducting Subsampling....in progress:5% Conducting Subsampling....in progress:10% Conducting Subsampling....in progress:15% Conducting Subsampling....in progress:20% Conducting Subsampling....in progress:25% Conducting Subsampling....in progress:30% Conducting Subsampling....in progress:35% Conducting Subsampling....in progress:40% Conducting Subsampling....in progress:45% Conducting Subsampling....in progress:50% Conducting Subsampling....in progress:55% Conducting Subsampling....in progress:60% Conducting Subsampling....in progress:65% Conducting Subsampling....in progress:70% Conducting Subsampling....in progress:75% Conducting Subsampling....in progress:80% Conducting Subsampling....in progress:85% Conducting Subsampling....in progress:90% Conducting Subsampling....in progress:95% Conducting Subsampling....in progress:100% Conducting Subsampling....done.                  
+#kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
+out = SDA_M(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
-#>  [1]  1  2  3  4  5  6  7  8  9 10 20
+#>  [1]  1  2  3  4  5  6  7  8  9 10 44
 ```
 
 ## Example 2: multiple testing: two sample t test
 
-This is a demonstration how to use our SDA method in two sample case.
+This is a demonstration on how to use our SDA method in two sample case.
 
 ``` r
 p = 100
@@ -73,26 +71,5 @@ Sigma_II = diag(p)
 
 out = SDA_2S(dat_I, dat_II, alpha=0.05, Sigma_I, Sigma_II)
 print(out)
-#>  [1]  7  3  4  2 10  8  5  6  1  9
-```
-
-## Example 3: new function for one-sample t test, with various test statistics for the first sample provided
-
-``` r
-n = 50
-p = 100
-
-rho = 0.8
-Sig = matrix(rho, p, p)
-diag(Sig) = 1
-
-dat <- MASS::mvrnorm(n, rep(0, p), Sig)
-mu = rep(0, p)
-mu[1:as.integer(0.1*p)]=0.5
-dat = dat+rep(1, n)%*%t(mu)
-alpha = 0.2
-#kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
-out = SDA_robust(dat, alpha, solve(Sig), kwd='innovate')
-print(out)
-#>  [1]  1  2  3  4  5  6  7  8  9 10 65
+#>  [1]  2 10  6  4  3  9  1  8  5  7 66 52
 ```

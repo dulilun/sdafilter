@@ -1,13 +1,13 @@
 #' Symmetrized Data Aggregation for two-sample t-test
 #'
-#' @param dat_I a n_1 by p data matrix, first sample
-#' @param dat_II a n_2 by p data matrix, second sample
+#' @param dat_I a \eqn{n_1} by p data matrix, first sample
+#' @param dat_II a \eqn{n_2} by p data matrix, second sample
 #' @param alpha the FDR level
-#' @param Sigma_I the covariance matrix of sample 1; if missing, it will be estimated
+#' @param Sigma_I the covariance matrix of sample 1; if it is missing, it will be estimated
 #' by the glasso package
-#' @param Sigma_II the covariance matrix of sample 2; if missing, it will be estimated
+#' @param Sigma_II the covariance matrix of sample 2; if it is missing, it will be estimated
 #' by the glasso package
-#' @param stable if TRUE, the sample will be randomly splitted B=10 times for stability
+#' @param stable if it is TRUE, the sample will be randomly splitted B=10 times for stability
 #' performance; otherwise, only single sample splitting is used.
 #'
 #' @return the indices of the hypotheses rejected

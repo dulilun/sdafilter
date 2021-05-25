@@ -7,7 +7,7 @@ test_that("SDA_M returns indices of rejected hypotheses", {
   mu[1:as.integer(0.1*p)]=0.5
   dat = dat+rep(1, n)%*%t(mu)
   alpha = 0.2
-  out = SDA_M(dat, alpha, nonsparse = TRUE)
+  out = SDA_M(dat, alpha, nonsparse = TRUE, kwd='lasso')
 
   if(is.character(out)){
     expect_match(out, 'no rejection')
