@@ -111,22 +111,23 @@ SDA_M <- function(dat,
 
 
   # AIC algorithm by ourselves
-  AIC_sda <- function(Y, X, w1){
-    p <- length(w1)
-    cut <- sort( abs(w1) )
-    aic_v <- sapply(1:(p-1), function(i){
-      sv = (1:p)[ abs(w1) > cut[i] ]
+  AIC_LS <- function(Y, X, w1){
+
+    cut <- sort( abs(unique(w1)), decreasing = TRUE )
+    aic_v <- sapply(cut, function(x){
+      sv = (1:p)[abs(w1)>=x]
       fit <- stats::lm(Y~X[, sv]-1)
       aic <- stats::deviance(fit)+2*length(sv)
       return(aic)
     })
 
     i_s <- which.min(aic_v)
+    p <- length(w1)
     sv = (1:p)[ abs(w1) > cut[i_s] ]
 
-    k= ceiling(p/3)
+    k= ceiling(length(cut)/3)
     if( length(sv)>k ){
-      sv = (1:p)[ abs(w1) > cut[2*k] ]
+      sv = (1:p)[ abs(w1) > cut[k] ]
     }
 
     return(sv)
@@ -156,17 +157,19 @@ SDA_M <- function(dat,
 
     }else if(kwd == 'innovate'){
       w1 = X%*%Y/sqrt(n_1)
-      sv = AIC_sda(Y, X, w1)
+      sv = AIC_LS(Y, X, w1)
 
     }else if(kwd == 'pfa'){
       Sigma <- INV(Gamma%*%Gamma)
       Test <- as.vector( sqrt(n_1)*dat1 )
-      PFA <- pfa::pfa.test(Test, Sigma=Sigma, reg="L2", plot="none")
+      PFA <- pfa::pfa.test(Test, Sigma=Sigma, reg="L1", plot="none")
       aP <- PFA$adjPvalue[, 1]
       aP[PFA$adjPvalue[, 2]] <- aP
       w1 = -stats::qnorm(aP/2)
+      w1[w1 == Inf] = 10
+      w1[w1 == -Inf] = -10
       w1 = w1*sign(Test)
-      sv = AIC_sda(Y, X, w1)
+      sv = AIC_LS(Y, X, w1)
 
     }else if(kwd == 'de-lasso'){
       # required by the de-biasd lasso
