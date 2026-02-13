@@ -48,7 +48,7 @@ alpha = 0.2
 #kwd = {'lasso', 'de_lasso', 'innovate', 'pfa'}
 out = SDA_M(dat, alpha, solve(Sig), kwd='innovate')
 print(out)
-#>  [1]  1  2  3  4  5  6  7  8  9 10 15 54
+#>  [1]  1  2  3  4  5  6  7  8  9 10 96
 ```
 
 ## Example 2: multiple testing: two-sample t-test
